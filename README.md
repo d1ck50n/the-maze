@@ -28,6 +28,7 @@ Acceptance Criteria
 
 
 Assumption:
+------------
 
 1. Program run in console (no interactive GUI)
 2. No proper error log being setup, and any error will print in console.
