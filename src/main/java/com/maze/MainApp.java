@@ -28,34 +28,40 @@ public class MainApp {
     }
 
     private void showMainMenu() {
-        MazeUtil.print("Select option to choose game: ");
+        MazeUtil.print("\nChoose game (1 or 2): ");
         MazeUtil.print("1 : Maze Coordinate");
         MazeUtil.print("2 : Maze Explore");
-        MazeUtil.print("My selection option: ");
+        MazeUtil.print("\nI want to play: ");
     }
 
     private void selectMenu(String input) {
         switch (input) {
             case "1":
-                MazeUtil.print("Maze started, input 'q' to quit, 'm' to go back main menu");
+                MazeUtil.print("\nMaze started, type 'quit' to quit game, 'menu' to go back main menu\n");
                 startFileMaze();
                 break;
 
             case "2":
-                MazeUtil.print("Maze explorer started, input 'q' to quit, 'm' to go back main menu");
+                MazeUtil.print("\nMaze explorer started, type 'quit' to quit game, 'menu' to go back main menu\n");
                 startMazeExplorer();
                 break;
 
-            case "q":
-                MazeUtil.print("Quit Maze... bye bye");
+            default:
+                MazeUtil.print("Menu option available: 1, 2");
+        }
+    }
+
+    private void checkIfQuitOrMenu(String input) {
+        switch (input) {
+            case "menu":
+                showMainMenu();
+                String menuInput = inputScanner.next();
+                selectMenu(menuInput);
+
+            case "quit":
+                MazeUtil.print("\nQuit Maze... bye bye\n");
                 inputScanner.close();
                 System.exit(0);
-
-            case "m":
-                showMainMenu();
-                break;
-            default:
-                MazeUtil.print("Menu option available: 1, 2, q, m");
         }
     }
 
@@ -65,8 +71,9 @@ public class MainApp {
         mazeBuilder.printInfo();
 
         while (true) {
-            System.out.print("Enter coordinate (example: x,y): ");
+            System.out.print("\nEnter coordinate (example: x,y): ");
             String input = inputScanner.next();
+            checkIfQuitOrMenu(input);
             Point point = MazeUtil.getPointFromInput(input, mazeGrid);
             if (point.x >= 0) {
                 MazeUtil.print("Character in maze grid: [" + mazeGrid[point.x][point.y] + "]\n");
@@ -78,16 +85,17 @@ public class MainApp {
     private void startMazeExplorer() {
         MazeBuilder mazeBuilder = new FileMaze();
         char[][] mazeGrid = mazeBuilder.build();
-        MazeUtil.print("Enter starting coordinate (example: x,y):");
+        MazeUtil.print("\nEnter coordinate to start (example: x,y):");
         String input = inputScanner.next();
+        checkIfQuitOrMenu(input);
         Point point = MazeUtil.getPointFromInput(input, mazeGrid);
-        if (point.x >= 0) {
+        if (point.x >= 0 && point.y > 0) {
             KeyExplorer explorer = new KeyExplorer(mazeGrid, point);
 
             while (true) {
                 MazeUtil.print("\nSelect your next movement, 'u':Up, 'd':Down, 'l':Left, 'r':Right (example: u)");
                 String movement = inputScanner.next();
-
+                checkIfQuitOrMenu(input);
                 switch (movement) {
                     case "u":
                         new MoveUp(explorer).move();
@@ -105,11 +113,10 @@ public class MainApp {
                     default:
                         MazeUtil.print("ALERT: Wrong input. Option available: [u] [d] [l] [r]");
                 }
-
             }
+
         } else {
-            //TODO loop input again
-            MazeUtil.print("Wrong input");
+            MazeUtil.print("Coordinate start from 0");
         }
 
     }
