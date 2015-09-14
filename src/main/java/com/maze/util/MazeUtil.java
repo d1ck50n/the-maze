@@ -26,15 +26,35 @@ public class MazeUtil {
             return new Point(x, y);
 
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("ALERT: Please enter grid within [" + mazeGrid.length + "][" + mazeGrid[0].length + "]\n");
+            MazeUtil.print("ALERT: Please enter grid within [" + mazeGrid.length + "][" + mazeGrid[0].length + "]\n");
 
         } catch (RuntimeException re) {
-            System.out.println("Incorrect coordinate format, example: x,y");
+            MazeUtil.print("Incorrect coordinate format, example: x,y");
         }
         return new Point(-1, -1);
     }
 
-    public static void print(String output){
+    /**
+     * Get default starting point which mark as 'S' in the maze
+     *
+     * @param mazeGrid
+     * @return
+     */
+    public static Point getDefaultPoint(char[][] mazeGrid) {
+        int maxGridX = mazeGrid.length;
+        int maxGridY = mazeGrid[0].length;
+        for (int x = 0; x < maxGridX; x++) {
+            for (int y = 0; y < maxGridY; y++) {
+                if (mazeGrid[x][y] == 'S') {
+                    MazeUtil.print("\nYou started at [" + x + "][" + y + "]");
+                    return new Point(x, y);
+                }
+            }
+        }
+        return new Point(-1, -1);
+    }
+
+    public static void print(String output) {
         System.out.println(output);
     }
 }

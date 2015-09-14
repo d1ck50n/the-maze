@@ -19,6 +19,7 @@ import java.util.Scanner;
 public class MainApp {
 
     private static final Scanner inputScanner = new Scanner(System.in);
+    private KeyExplorer explorer;
 
     public static void main(String[] args) throws IOException {
         MainApp app = new MainApp();
@@ -60,6 +61,7 @@ public class MainApp {
 
             case "quit":
                 MazeUtil.print("\nQuit Maze... bye bye\n");
+                printRoute();
                 inputScanner.close();
                 System.exit(0);
         }
@@ -76,49 +78,60 @@ public class MainApp {
             checkIfQuitOrMenu(input);
             Point point = MazeUtil.getPointFromInput(input, mazeGrid);
             if (point.x >= 0) {
-                MazeUtil.print("Character in maze grid: [" + mazeGrid[point.x][point.y] + "]\n");
+                char currentGrid = mazeGrid[point.x][point.y];
+                switch (currentGrid) {
+                    case 'S':
+                        MazeUtil.print("Character in maze grid: [START POINT 'S']\n");
+                        break;
+                    case 'F':
+                        MazeUtil.print("Character in maze grid: [EXIT POINT 'F']\n");
+                        break;
+                    default:
+                        MazeUtil.print("Character in maze grid: [" + mazeGrid[point.x][point.y] + "]\n");
+                }
             }
-
         }
     }
 
     private void startMazeExplorer() {
         MazeBuilder mazeBuilder = new FileMaze();
         char[][] mazeGrid = mazeBuilder.build();
-        MazeUtil.print("\nEnter coordinate to start (example: x,y):");
-        String input = inputScanner.next();
-        checkIfQuitOrMenu(input);
-        Point point = MazeUtil.getPointFromInput(input, mazeGrid);
-        if (point.x >= 0 && point.y > 0) {
-            KeyExplorer explorer = new KeyExplorer(mazeGrid, point);
+        Point point = MazeUtil.getDefaultPoint(mazeGrid);
 
-            while (true) {
-                MazeUtil.print("\nSelect your next movement, 'u':Up, 'd':Down, 'l':Left, 'r':Right (example: u)");
-                String movement = inputScanner.next();
-                checkIfQuitOrMenu(input);
-                switch (movement) {
-                    case "u":
-                        new MoveUp(explorer).move();
-                        break;
+        explorer = new KeyExplorer(mazeGrid, point);
 
-                    case "d":
-                        new MoveDown(explorer).move();
-                        break;
-                    case "l":
-                        new MoveLeft(explorer).move();
-                        break;
-                    case "r":
-                        new MoveRight(explorer).move();
-                        break;
-                    default:
-                        MazeUtil.print("ALERT: Wrong input. Option available: [u] [d] [l] [r]");
-                }
+        while (true) {
+            MazeUtil.print("\nSelect your next movement, 'u':Up, 'd':Down, 'l':Left, 'r':Right (example: u)");
+            String movementInput = inputScanner.next();
+            checkIfQuitOrMenu(movementInput);
+            switch (movementInput) {
+                case "u":
+                    new MoveUp(explorer).move();
+                    break;
+
+                case "d":
+                    new MoveDown(explorer).move();
+                    break;
+
+                case "l":
+                    new MoveLeft(explorer).move();
+                    break;
+
+                case "r":
+                    new MoveRight(explorer).move();
+                    break;
+
+                default:
+                    MazeUtil.print("ALERT: Wrong input. Option available: [u] [d] [l] [r]");
             }
-
-        } else {
-            MazeUtil.print("Coordinate start from 0");
         }
+    }
 
+    private void printRoute() {
+        MazeUtil.print("Sumarry of your route: \n");
+        for (String route : explorer.getMovementHistoryList()) {
+            MazeUtil.print(route);
+        }
     }
 
 }

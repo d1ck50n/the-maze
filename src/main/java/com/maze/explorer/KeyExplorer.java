@@ -58,10 +58,10 @@ public class KeyExplorer {
     }
 
     public void addMovementHistory(MOVE move, Point point) {
-        movementHistoryList.add("Then you move: " + move + " to [" + point.x + "][" + point.y + "]");
+        movementHistoryList.add("Then you move " + move + " to [" + point.x + "][" + point.y + "]");
     }
 
-    public List getMovementHistoryList() {
+    public List<String> getMovementHistoryList() {
         return this.movementHistoryList;
     }
 
