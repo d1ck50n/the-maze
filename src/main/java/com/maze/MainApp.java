@@ -28,26 +28,26 @@ public class MainApp {
     }
 
     private void showMainMenu() {
-        System.out.println("Select option to choose game: ");
-        System.out.println("1 : Maze Coordinate");
-        System.out.println("2 : Maze Explore");
-        System.out.println("My selection option: ");
+        MazeUtil.print("Select option to choose game: ");
+        MazeUtil.print("1 : Maze Coordinate");
+        MazeUtil.print("2 : Maze Explore");
+        MazeUtil.print("My selection option: ");
     }
 
     private void selectMenu(String input) {
         switch (input) {
             case "1":
-                System.out.println("Maze started, input 'q' to quit, 'm' to go back main menu");
+                MazeUtil.print("Maze started, input 'q' to quit, 'm' to go back main menu");
                 startFileMaze();
                 break;
 
             case "2":
-                System.out.println("Maze explorer started, input 'q' to quit, 'm' to go back main menu");
+                MazeUtil.print("Maze explorer started, input 'q' to quit, 'm' to go back main menu");
                 startMazeExplorer();
                 break;
 
             case "q":
-                System.out.println("Quit Maze... bye bye");
+                MazeUtil.print("Quit Maze... bye bye");
                 inputScanner.close();
                 System.exit(0);
 
@@ -55,7 +55,7 @@ public class MainApp {
                 showMainMenu();
                 break;
             default:
-                System.out.println("Menu option available: 1, 2, q, m");
+                MazeUtil.print("Menu option available: 1, 2, q, m");
         }
     }
 
@@ -69,7 +69,7 @@ public class MainApp {
             String input = inputScanner.next();
             Point point = MazeUtil.getPointFromInput(input, mazeGrid);
             if (point.x >= 0) {
-                System.out.println("Character in maze grid: [" + mazeGrid[point.x][point.y] + "]\n");
+                MazeUtil.print("Character in maze grid: [" + mazeGrid[point.x][point.y] + "]\n");
             }
 
         }
@@ -78,42 +78,38 @@ public class MainApp {
     private void startMazeExplorer() {
         MazeBuilder mazeBuilder = new FileMaze();
         char[][] mazeGrid = mazeBuilder.build();
-        System.out.println("Enter starting coordinate (example: x,y):");
+        MazeUtil.print("Enter starting coordinate (example: x,y):");
         String input = inputScanner.next();
         Point point = MazeUtil.getPointFromInput(input, mazeGrid);
         if (point.x >= 0) {
             KeyExplorer explorer = new KeyExplorer(mazeGrid, point);
 
             while (true) {
-                System.out.println("\nSelect your next movement, 'u':Up, 'd':Down, 'l':Left, 'r':Right (example: u)");
+                MazeUtil.print("\nSelect your next movement, 'u':Up, 'd':Down, 'l':Left, 'r':Right (example: u)");
                 String movement = inputScanner.next();
 
                 switch (movement) {
                     case "u":
                         new MoveUp(explorer).move();
-                        explorer.printCurrentPoint();
                         break;
 
                     case "d":
                         new MoveDown(explorer).move();
-                        explorer.printCurrentPoint();
                         break;
                     case "l":
                         new MoveLeft(explorer).move();
-                        explorer.printCurrentPoint();
                         break;
                     case "r":
                         new MoveRight(explorer).move();
-                        explorer.printCurrentPoint();
                         break;
                     default:
-                        System.out.println("ALERT: Wrong input. Option available: [u] [d] [l] [r]");
+                        MazeUtil.print("ALERT: Wrong input. Option available: [u] [d] [l] [r]");
                 }
 
             }
         } else {
             //TODO loop input again
-            System.out.println("Wrong input");
+            MazeUtil.print("Wrong input");
         }
 
     }

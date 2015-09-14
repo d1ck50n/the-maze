@@ -1,5 +1,6 @@
 package com.maze.builder;
 
+import com.maze.util.MazeUtil;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class FileMaze implements MazeBuilder {
             // read file once and save content into collection
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                MazeUtil.print(line);
                 totalLines.add(line);
             }
 
@@ -54,7 +55,7 @@ public class FileMaze implements MazeBuilder {
             }
 
         } catch (IOException ex) {
-            System.out.println("Fail to build maze from file due to: " + ex);
+            MazeUtil.print("Fail to build maze from file due to: " + ex);
         }
 
         return new char[0][0];
@@ -62,8 +63,8 @@ public class FileMaze implements MazeBuilder {
 
     @Override
     public void printInfo() {
-        System.out.println("\nNumber of wall = " + this.totalWall);
-        System.out.println("Number of empty space = " + this.totalSpace + "\n");
+        MazeUtil.print("\nNumber of wall = " + this.totalWall);
+        MazeUtil.print("Number of empty space = " + this.totalSpace + "\n");
     }
 
 }

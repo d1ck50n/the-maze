@@ -33,4 +33,8 @@ public class MazeUtil {
         }
         return new Point(-1, -1);
     }
+
+    public static void print(String output){
+        System.out.println(output);
+    }
 }

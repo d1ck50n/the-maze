@@ -14,7 +14,7 @@ public class KeyExplorer {
     private int maxGridX;
     private int maxGridY;
     private Point currentPoint;
-    private final List<String> movementStore = new ArrayList<>();
+    private final List<String> movementHistoryList = new ArrayList<>();
 
     public enum MOVE {
 
@@ -26,7 +26,7 @@ public class KeyExplorer {
         this.maxGridX = grid.length;
         this.maxGridY = grid[0].length;
         this.currentPoint = entryPoint;
-        movementStore.add("You start at [" + entryPoint.x + "][" + entryPoint.y + "]");
+        movementHistoryList.add("You start at [" + entryPoint.x + "][" + entryPoint.y + "]");
     }
 
     public void setCurrentPoint(Point point) {
@@ -57,15 +57,12 @@ public class KeyExplorer {
         return this.mazeGrid;
     }
 
-    public void printCurrentPoint() {
-        System.out.println("Current coordinate: " + currentPoint.x + ", " + currentPoint.y);
+    public void addMovementHistory(MOVE move, Point point) {
+        movementHistoryList.add("Then you move: " + move + " to [" + point.x + "][" + point.y + "]");
     }
 
-    public void addMovement(MOVE move, Point point) {
-        movementStore.add("Then you move: " + move + " to [" + point.x + "][" + point.y + "]");
+    public List getMovementHistoryList() {
+        return this.movementHistoryList;
     }
 
-    public List getMovementStore(){
-        return this.movementStore;
-    }
 }
