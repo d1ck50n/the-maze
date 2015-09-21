@@ -23,7 +23,7 @@ public class MazeCoordinate extends Maze {
 
         while (true) {
             System.out.print("\nEnter coordinate (example: x,y): ");
-            String input = inputScanner.next();
+            String input = super.inputScanner.next();
             super.checkIfQuitOrMenu(input);
             Point point = MazeUtil.getPointFromInput(input, mazeGrid);
             if (point.x >= 0) {
