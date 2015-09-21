@@ -21,11 +21,7 @@ public class MoveRight extends Movement {
         if (point.x + 1 < explorer.getMaxGridX()) {
             point.x++;
             Point newPoint = new Point(point.x, point.y);
-            explorer.setCurrentPoint(newPoint);
-            explorer.addMovementHistory(KeyExplorer.MOVE.RIGHT, newPoint);
-            super.printCurrentCoordinate(newPoint);
-            super.printGridInfront(explorer);
-            super.printAvailableMove(explorer);
+            super.updateExplorer(newPoint, explorer, KeyExplorer.MOVE.RIGHT);
 
         } else {
             MazeUtil.print("You are at the most right of wall, not allow to move right");

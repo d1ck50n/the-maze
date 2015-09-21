@@ -11,11 +11,19 @@ public abstract class Movement {
 
     public abstract void move();
 
-    public void printCurrentCoordinate(Point point) {
+    protected void updateExplorer(Point newPoint, KeyExplorer explorer, KeyExplorer.MOVE key) {
+        explorer.addMovementHistory(key, newPoint);
+        explorer.setCurrentPoint(newPoint);
+        printCurrentCoordinate(newPoint);
+        printGridInfront(explorer);
+        printAvailableMove(explorer);
+    }
+
+    private void printCurrentCoordinate(Point point) {
         MazeUtil.print("Current coordinate: " + point.x + ", " + point.y);
     }
 
-    public void printGridInfront(KeyExplorer explorer) {
+    private void printGridInfront(KeyExplorer explorer) {
         Point currentPoint = explorer.getCurrentPoint();
         if (currentPoint.y + 1 < explorer.getMaxGridY()) {
             MazeUtil.print("[" + explorer.getMazeGrid()[currentPoint.x][currentPoint.y + 1] + "] infront of you");
@@ -25,7 +33,7 @@ public abstract class Movement {
         }
     }
 
-    public void printAvailableMove(KeyExplorer explorer) {
+    private void printAvailableMove(KeyExplorer explorer) {
         Point currentPoint = explorer.getCurrentPoint();
         StringBuilder sb = new StringBuilder();
         sb.append("You are allow to move ");

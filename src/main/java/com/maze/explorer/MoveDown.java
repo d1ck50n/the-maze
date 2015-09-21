@@ -21,11 +21,7 @@ public class MoveDown extends Movement {
         if (point.y - 1 >= 0) {
             point.y--;
             Point newPoint = new Point(point.x, point.y);
-            explorer.setCurrentPoint(newPoint);
-            explorer.addMovementHistory(KeyExplorer.MOVE.DOWN, newPoint);
-            super.printCurrentCoordinate(newPoint);
-            super.printGridInfront(explorer);
-            super.printAvailableMove(explorer);
+            super.updateExplorer(newPoint, explorer, KeyExplorer.MOVE.DOWN);
 
         } else {
             MazeUtil.print("You are at the bottom of wall, not allow to move down");

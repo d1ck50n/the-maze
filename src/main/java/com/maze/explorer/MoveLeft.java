@@ -21,11 +21,7 @@ public class MoveLeft extends Movement {
         if (point.x - 1 >= 0) {
             point.x--;
             Point newPoint = new Point(point.x, point.y);
-            explorer.setCurrentPoint(newPoint);
-            explorer.addMovementHistory(KeyExplorer.MOVE.LEFT, newPoint);
-            super.printCurrentCoordinate(newPoint);
-            super.printGridInfront(explorer);
-            super.printAvailableMove(explorer);
+            super.updateExplorer(newPoint, explorer, KeyExplorer.MOVE.LEFT);          
 
         } else {
             MazeUtil.print("You are at the most left of wall, not allow to move left");

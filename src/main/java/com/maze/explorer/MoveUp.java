@@ -21,11 +21,7 @@ public class MoveUp extends Movement {
         if (point.y + 1 < explorer.getMaxGridY()) {
             point.y++;
             Point newPoint = new Point(point.x, point.y);
-            explorer.setCurrentPoint(newPoint);
-            explorer.addMovementHistory(KeyExplorer.MOVE.UP, newPoint);
-            super.printCurrentCoordinate(newPoint);
-            super.printGridInfront(explorer);
-            super.printAvailableMove(explorer);
+            super.updateExplorer(newPoint, explorer, KeyExplorer.MOVE.UP);
 
         } else {
             MazeUtil.print("You are at the top of wall, not allow to move up");
